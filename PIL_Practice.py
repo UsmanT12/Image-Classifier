@@ -4,9 +4,13 @@ from PIL import Image
 import os
 
 size_200 = (200, 200)  
+image = Image.open('usman_pic copy.jpg')
 
+'''
 im = Image.open('usman_pic copy.jpg')
 im.show()
+
+#for loop that creates a 200x200 version of all jpg images
 for f in os.listdir('.'):
     if f.endswith('.jpg'):
         i = Image.open(f)
@@ -15,4 +19,22 @@ for f in os.listdir('.'):
         #adds all images in repo to the 200 folder as a size 200x200
         i.thumbnail(size_200)
         i.save('200/{}_200{}'.format(fn, text))
-        
+'''
+
+'''
+#create a temporary image then show it
+purp = Image.new('RGB', (300, 300), 'purple')
+purp.show()
+print(purp.size)
+
+#use the rotating and crop functions
+rotated = image.rotate(45, expand = True, fillcolor = 'grey')
+rotated.show()
+
+crop = image.crop((425, 150, 875, 600))
+crop.show()
+
+#Convert image to a matrix
+image_matrix = np.array(image)
+print(image_matrix)
+'''
