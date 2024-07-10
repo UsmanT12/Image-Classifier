@@ -26,15 +26,15 @@ def column_vector(array):
 #Loads a directory full of JPEG images into a dict (filename -> vectorized image)
 def load_images(directory):
     dict = {}
+    
     for i in os.listdir(directory):
-        if i.endswith('.JPEG') or i.endswith('.jpg'):
-            image = Image.open(i)
+        if i.lower().endswith('.jpeg') or i.endswith('.jpg'):
+            image_path = os.path.join(directory, i)
+            image = Image.open(image_path)
             dict[i] = column_vector(np.array(image))
     return dict
 
-#TODO: Combines vectorized images into a matrix where every image is a column
+#Combines vectorized images into a matrix where every image is a column
 def combine_vectors(vector1, vector2):
-    return
-    
-#Testing
-print (resize_image('usman_pic copy.jpg', 200, 200))
+    matrix = np.hstack((vector1, vector2))
+    return matrix
