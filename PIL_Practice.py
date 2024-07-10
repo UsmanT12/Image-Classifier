@@ -37,4 +37,14 @@ crop.show()
 #Convert image to a matrix
 image_matrix = np.array(image)
 print(image_matrix)
+
+#Get individual RGB values from the image
+#This creates a grey image
+red = np.array(image.getchannel('R'))
+blue = np.array(image.getchannel('B'))
+green = np.array(image.getchannel('G'))
+
+print(red)
+print(blue)
+print(green)
 '''
