@@ -32,9 +32,9 @@ print('combined vectors: ', combined)
 '''
 #Test for load_images
 try:
-    loaded_images = load_images('JPEG')
+    loaded_images_2 = load_images('JPEG')
     print("Images loaded successfully.")
-    print(loaded_images)
+    print(loaded_images_2)
 except FileNotFoundError:
     print("Directory 'JPEG' not found.")
 except Exception as e:
@@ -58,11 +58,72 @@ if __name__ == "__main__":
     main()
 '''
 
+
 #Test to open a few images from the MNIST set
-loaded_images = load_images('trainingSet/2')
-image_0 = Image.open('trainingSet/2/img_261.jpg')
-image_0.show()
-array_0 = np.array(image_0)
-#print (array_0)
-#print(loaded_images['img_261.jpg'])
-print('Length of loaded images:', len(loaded_images))
+loaded_images_2 = load_images('trainingSet/2')
+image_261 = Image.open('trainingSet/2/img_261.jpg')
+#image_261.show()
+array_261 = np.array(image_261)
+#print (array_261)
+#print(loaded_images_2['img_261.jpg'])
+#print('Length of loaded images:', len(loaded_images_2))
+
+
+#Normalized image for img_261.jpg (2)
+array_261 = loaded_images_2['img_261.jpg']
+norm_261 = np.linalg.norm(array_261)
+normalized_261 = array_261 / norm_261
+flat_array_261 = normalized_261.flatten()
+flat_normalized_261 = np.array(flat_array_261)
+#print('Normalized image array: ', normalized_261)
+
+
+
+#compute dot product of img_261.jpg vector with normalized image vector, restults with 1.0 
+dot_261 = np.dot(flat_array_261, flat_normalized_261)
+#print(dot_261)
+
+
+#compute dot product of normalized image vector of im_261 and img_271
+array_271 = loaded_images_2['img_271.jpg']
+norm_271 = np.linalg.norm(array_271)
+normalized_271 = array_271 / norm_271
+flat_array_271 = normalized_271.flatten()
+flat_normalized_271 = np.array(flat_array_271)
+dot_271_261 = np.dot(flat_normalized_271, flat_normalized_261)
+#print('Normal dot product w/ 261 and 271 = ', dot_271_261)
+
+
+
+#compute the dot product of img_261 with 10 other images of 2 from the MNIST set
+print('Dot products with 2 and other 2 images:')
+total_2 = 0
+for i, (key, value) in enumerate(loaded_images_2.items()):
+    if i == 10:
+        break
+    norm = np.linalg.norm(value)
+    normalized_vector = value / norm
+    flat_vector = normalized_vector.flatten()
+    dot_product = np.dot(flat_normalized_261, flat_vector)
+    print('Normal dot product w/ img_261.jpg and ', key, ': ', dot_product)
+    total_2 += dot_product
+avg_2 = total_2 / 10
+print('\n')
+    
+#compute the dot product of img_261 with 10 images of 9 from the MNIST set
+loaded_images_8 = load_images('trainingSet/9')
+print('Dot products with 2 and 9 images:')
+total_9 = 0
+for i, (key, value) in enumerate(loaded_images_8.items()):
+    if i == 10:
+        break
+    norm = np.linalg.norm(value)
+    normalized_vector = value / norm
+    flat_vector = normalized_vector.flatten()
+    dot_product = np.dot(flat_normalized_261, flat_vector)
+    print('Normal dot product w/ img_261.jpg and ', key, ': ', dot_product)
+    total_9 += dot_product
+avg_9 = total_9 / 10
+print('\n', )
+print('Average dot product with 2: ', avg_2)
+print('Average dot product with 9: ', avg_9)
