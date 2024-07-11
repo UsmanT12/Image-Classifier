@@ -47,4 +47,7 @@ green = np.array(image.getchannel('G'))
 print(red)
 print(blue)
 print(green)
+
+#grayscale image
+gray_array = np.array(image.convert('L'))
 '''

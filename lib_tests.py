@@ -42,7 +42,7 @@ except Exception as e:
 '''
 
 
-
+'''
 #Tests for the genutils.py functions
 def main():
     required_params = ['input_file', 'output_file']
@@ -56,3 +56,13 @@ def main():
 
 if __name__ == "__main__":
     main()
+'''
+
+#Test to open a few images from the MNIST set
+loaded_images = load_images('trainingSet/2')
+image_0 = Image.open('trainingSet/2/img_261.jpg')
+image_0.show()
+array_0 = np.array(image_0)
+#print (array_0)
+#print(loaded_images['img_261.jpg'])
+print('Length of loaded images:', len(loaded_images))
