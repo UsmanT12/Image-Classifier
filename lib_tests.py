@@ -93,7 +93,16 @@ flat_normalized_271 = np.array(flat_array_271)
 dot_271_261 = np.dot(flat_normalized_271, flat_normalized_261)
 #print('Normal dot product w/ 261 and 271 = ', dot_271_261)
 
-
+#function that computes the cosine similarity given 2 column vectors
+def cosine_similarity(vec1, vec2):
+    norm1 = np.linalg.norm(vec1)
+    vec1 = vec1 / norm1
+    norm2 = np.linalg.norm(vec2)
+    vec2 = vec2 / norm2
+    flat_vec1 = vec1.flatten()
+    flat_vec2 = vec2.flatten()
+    dot_product = np.dot(flat_vec1, flat_vec2)
+    return dot_product
 
 #compute the dot product of img_261 with 10 other images of 2 from the MNIST set
 print('Dot products with 2 and other 2 images:')
@@ -127,3 +136,4 @@ avg_9 = total_9 / 10
 print('\n', )
 print('Average dot product with 2: ', avg_2)
 print('Average dot product with 9: ', avg_9)
+
