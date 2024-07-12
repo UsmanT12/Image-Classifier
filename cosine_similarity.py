@@ -29,22 +29,6 @@ def cosine_similarity_set(image1, number_set1, number_set2, amount, dict):
         print('Normal dot product w/ ', image1, ' and ', key, ': ', dot_product)
         total += dot_product
     return
-'''
-#compute the dot product of img_261 with 10 other images of 2 from the MNIST set
-print('Dot products with 2 and other 2 images:')
-total_2 = 0
-for i, (key, value) in enumerate(loaded_images_2.items()):
-    if i == 10:
-        break
-    norm = np.linalg.norm(value)
-    normalized_vector = value / norm
-    flat_vector = normalized_vector.flatten()
-    dot_product = np.dot(flat_normalized_261, flat_vector)
-    print('Normal dot product w/ img_261.jpg and ', key, ': ', dot_product)
-    total_2 += dot_product
-avg_2 = total_2 / 10
-print('\n')
-'''
 
 #Normalized image for img_261.jpg (2)
 loaded_images_2 = load_images('trainingSet/2')
@@ -55,8 +39,6 @@ normalized_261 = array_261 / norm_261
 flat_array_261 = normalized_261.flatten()
 flat_normalized_261 = np.array(flat_array_261)
 #print('Normalized image array: ', normalized_261)
-
-
 
 #compute dot product of img_261.jpg vector with normalized image vector, restults with 1.0 
 dot_261 = np.dot(flat_array_261, flat_normalized_261)
