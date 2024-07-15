@@ -15,7 +15,7 @@ def cosine_similarity(vec1, vec2):
 
 #function that computes the cosine similarity of n amount of images in the m number set
 def cosine_similarity_set(image1, number_set1, number_set2, amount, dict):
-    print(amount, 'dot products with ', image1 + '(' + str(number_set1) + ')', 'and', number_set2, 'images:')
+    #print(amount, 'dot products with ', image1 + '(' + str(number_set1) + ')', 'and', number_set2, 'images:')
     total = 0
     image = Image.open('trainingSet/' + str(number_set1) + '/' + image1)
     image = np.array(image)
@@ -29,7 +29,7 @@ def cosine_similarity_set(image1, number_set1, number_set2, amount, dict):
         #print('Normal dot product w/ ', image1, ' and ', key, ': ', dot_product)
         total += abs(dot_product)
     average = total / amount
-    print('Average cosine similarity of image', image1, '(' + number_set1 + ')', 'with', number_set2, 'with', amount, 'amount of', images, '\n')
+    print('Average cosine similarity of image', image1, '(' + str(number_set1) + ')', 'with class', str(number_set2), 'with', amount, ' images: ', average, '\n')
     return
 
 #function that computes the cosine similarities of the different images in the same set
@@ -53,7 +53,7 @@ def cosine_similarity_same_set(number_set, amount, dict):
             #print(key, dot_product)
 
     average = total / comparisons
-    print('Average of', number_set, 'class with', amount, 'images', average, '\n')
+    print('Average cosine similarity of', number_set, 'class with same set of ', amount, 'images', average, '\n')
     return
 
 #Normalized image for img_261.jpg (2)
@@ -79,6 +79,8 @@ flat_normalized_271 = np.array(flat_array_271)
 dot_271_261 = np.dot(flat_normalized_271, flat_normalized_261)
 #print('Normal dot product w/ 261 and 271 = ', dot_271_261)
 
+
+'''
 #compute the dot product of img_261 with 10 images of 9 from the MNIST set
 loaded_images_9 = load_images('trainingSet/9')
 print('Dot products with 2 and 9 images:')
@@ -94,19 +96,25 @@ for i, (key, value) in enumerate(loaded_images_9.items()):
     total_9 += abs(dot_product)
 avg_9 = total_9 / 10
 print('Average: ',avg_9 ,'\n')
+'''
+
+
 #print('Average dot product with 2: ', avg_2)
 #print('Average dot product with 9: ', avg_9)
 
-loaded_images_1 = {}
+loaded_images1 = {}
+loaded_images2 = {}
 '''
 #Tests for cosine_similarity_set
-#cosine_similarity_set('img_101.jpg', 2, 9, 20, loaded_images_1)
-#cosine_similarity_set('img_101.jpg', 2, 5, 20, loaded_images_1)
+#cosine_similarity_set('img_101.jpg', 2, 9, 20, loaded_images1)
+#cosine_similarity_set('img_101.jpg', 2, 5, 20, loaded_images1)
 
 for i in range(10):
-    cosine_similarity_set('img_101.jpg', 2, i, 20, loaded_images_1) 
+    cosine_similarity_set('img_101.jpg', 2, i, 20, loaded_images1) 
 #In conclusion cosine similarity isn't very accurate for one image.
 '''
 
 #test for cosine_similarity_same_set
-cosine_similarity_same_set(2, 20, loaded_images_1)
+print('\n')
+cosine_similarity_set('img_101.jpg', 2, 9, 20, loaded_images1)
+cosine_similarity_same_set(2, 20, loaded_images2) 
