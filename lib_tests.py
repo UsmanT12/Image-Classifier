@@ -58,6 +58,26 @@ if __name__ == "__main__":
     main()
 '''
 
+'''
+***************************
+'''
+
+'''
+#compute the dot product of img_261 with 10 other images of 2 from the MNIST set
+print('Dot products with 2 and other 2 images:')
+total_2 = 0
+for i, (key, value) in enumerate(loaded_images_2.items()):
+    if i == 10:
+        break
+    norm = np.linalg.norm(value)
+    normalized_vector = value / norm
+    flat_vector = normalized_vector.flatten()
+    dot_product = np.dot(flat_normalized_261, flat_vector)
+    print('Normal dot product w/ img_261.jpg and ', key, ': ', dot_product)
+    total_2 += dot_product
+avg_2 = total_2 / 10
+print('\n')
+'''
 
 #Test to open a few images from the MNIST set
 loaded_images_2 = load_images('trainingSet/2')
@@ -92,48 +112,3 @@ flat_array_271 = normalized_271.flatten()
 flat_normalized_271 = np.array(flat_array_271)
 dot_271_261 = np.dot(flat_normalized_271, flat_normalized_261)
 #print('Normal dot product w/ 261 and 271 = ', dot_271_261)
-
-#function that computes the cosine similarity given 2 column vectors
-def cosine_similarity(vec1, vec2):
-    norm1 = np.linalg.norm(vec1)
-    vec1 = vec1 / norm1
-    norm2 = np.linalg.norm(vec2)
-    vec2 = vec2 / norm2
-    flat_vec1 = vec1.flatten()
-    flat_vec2 = vec2.flatten()
-    dot_product = np.dot(flat_vec1, flat_vec2)
-    return dot_product
-
-#compute the dot product of img_261 with 10 other images of 2 from the MNIST set
-print('Dot products with 2 and other 2 images:')
-total_2 = 0
-for i, (key, value) in enumerate(loaded_images_2.items()):
-    if i == 10:
-        break
-    norm = np.linalg.norm(value)
-    normalized_vector = value / norm
-    flat_vector = normalized_vector.flatten()
-    dot_product = np.dot(flat_normalized_261, flat_vector)
-    print('Normal dot product w/ img_261.jpg and ', key, ': ', dot_product)
-    total_2 += dot_product
-avg_2 = total_2 / 10
-print('\n')
-    
-#compute the dot product of img_261 with 10 images of 9 from the MNIST set
-loaded_images_8 = load_images('trainingSet/9')
-print('Dot products with 2 and 9 images:')
-total_9 = 0
-for i, (key, value) in enumerate(loaded_images_8.items()):
-    if i == 10:
-        break
-    norm = np.linalg.norm(value)
-    normalized_vector = value / norm
-    flat_vector = normalized_vector.flatten()
-    dot_product = np.dot(flat_normalized_261, flat_vector)
-    print('Normal dot product w/ img_261.jpg and ', key, ': ', dot_product)
-    total_9 += dot_product
-avg_9 = total_9 / 10
-print('\n', )
-print('Average dot product with 2: ', avg_2)
-print('Average dot product with 9: ', avg_9)
-
