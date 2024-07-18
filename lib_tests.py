@@ -42,11 +42,11 @@ except Exception as e:
 '''
 
 
-'''
+
 #Tests for the genutils.py functions
 def main():
     required_params = ['input_file', 'output_file']
-    optional_params = {'--verbose': 'False', '--mode': 'default'}
+    optional_params = ['image_size', 'image_length']
     
     try:
         params = parse_command_line_params(required_params, optional_params)
@@ -56,7 +56,7 @@ def main():
 
 if __name__ == "__main__":
     main()
-'''
+
 
 '''
 ***************************
@@ -79,6 +79,7 @@ avg_2 = total_2 / 10
 print('\n')
 '''
 
+'''
 #Test to open a few images from the MNIST set
 loaded_images_2 = load_images('trainingSet/2')
 image_261 = Image.open('trainingSet/2/img_261.jpg')
@@ -112,3 +113,26 @@ flat_array_271 = normalized_271.flatten()
 flat_normalized_271 = np.array(flat_array_271)
 dot_271_261 = np.dot(flat_normalized_271, flat_normalized_261)
 #print('Normal dot product w/ 261 and 271 = ', dot_271_261)
+dict = load_images('trainingSet/2')
+arr = combine_matrix(dict)
+#print(arr)
+'''
+
+'''
+#Image column vector matrix test
+arr1 = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15]]
+arr2 = [[16, 17, 18, 19, 20], [21, 22, 23, 24, 25], [26, 27, 28, 29, 30]]
+arr3 = [[31, 32, 33, 34, 35], [36, 37, 38, 39, 40], [41, 42, 43, 44, 45]]
+arr4 = [[46, 47, 48, 49, 50], [51, 52, 53, 54, 55], [56, 57, 58, 59, 60]]
+
+column_vector1 = column_vector(arr1)
+column_vector2 = column_vector(arr2)
+column_vector3 = column_vector(arr3)
+column_vector4 = column_vector(arr4)
+
+dict1 = {'1': column_vector1, '2': column_vector2, '3': column_vector3, '4': column_vector4}
+
+#print(column_vector1)
+array_test = combine_matrix(dict1)
+print(array_test)
+'''
