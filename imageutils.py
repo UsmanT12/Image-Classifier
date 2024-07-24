@@ -34,7 +34,23 @@ def load_images(directory):
             dict[i] = column_vector(np.array(image))
     return dict
 
+
+#Load images vectors into a 2D matrix, with each image vector as a column
+def combine_matrix(dict):
+    arr = []
+    
+    for i in dict.values():
+        arr.append(i)
+    arr = np.hstack(arr)
+    return arr
+
 #Combines vectorized images into a matrix where every image is a column
 def combine_vectors(vector1, vector2):
     matrix = np.hstack((vector1, vector2))
     return matrix
+
+#Function for showing an image in a graph
+def show_image(img_arr):
+    plt.imshow(img_arr, cmap='gray') 
+    plt.show() 
+    return None
