@@ -24,14 +24,16 @@ def column_vector(array):
     return column_vector
 
 #Loads a directory full of JPEG images into a dict (filename -> vectorized image)
-def load_images(directory):
+def load_images(directory, size1, size2):
     dict = {}
     
     for i in os.listdir(directory):
         if i.lower().endswith('.jpeg') or i.endswith('.jpg'):
             image_path = os.path.join(directory, i)
-            image = Image.open(image_path).convert('L')
-            dict[i] = column_vector(np.array(image))
+            #image = Image.open(image_path).convert('L')
+            #dict[i] = column_vector(np.array(image))
+            resized_image = resize_image(image_path, size1, size2)
+            dict[i] = column_vector(resized_image)
     return dict
 
 
@@ -50,13 +52,28 @@ def combine_vectors(vector1, vector2):
     return matrix
 
 #create subspace of a class with the column image matrix
-def create_sub(matrix):
-    transpose = matrix.transpose()
-    subspace = np.linalg.inv(transpose.dot(matrix))
-    subspace = matrix.dot(subspace)
-    subspace = subspace.dot(transpose)
+def create_sub(A):
+    if A.size == 0:
+        raise ValueError("Input matrix A is empty")
+
+    A_transpose = np.transpose(A)
+    AT_A = np.dot(A_transpose, A)
+    AT_A_inv = np.linalg.pinv(AT_A)
+    A_AT_A_inv = np.dot(A, AT_A_inv)
+    embedding_matrix = np.dot(A_AT_A_inv, A_transpose)
     
-    return subspace
+    return embedding_matrix
+    
+def project_image(image, embedding):
+    projection = np.dot(embedding, image)
+    return projection
+
+#Function for showing an image in a graph
+def show_image(img_arr):
+    plt.imshow(img_arr, cmap='gray') 
+    plt.show() 
+    return None
+
 
 #really simple subspace function for an image matrix
 def create_sub_simple(matrix):
@@ -65,13 +82,29 @@ def create_sub_simple(matrix):
         average = np.mean(row)
         averages.append(average)
     return averages
-    
-def project_image(image, subspace):
-    projection = subspace.dot(image)
-    return projection
 
-#Function for showing an image in a graph
-def show_image(img_arr):
-    plt.imshow(img_arr, cmap='gray') 
-    plt.show() 
-    return None
+
+
+'''
+def main():
+    np.set_printoptions(threshold=np.inf)
+    dict = {
+        'arr1': np.array([[1], [1], [1], [1], [1]]),
+        'arr2': np.array([[2], [2], [2], [2], [2]]),
+        'arr3': np.array([[3], [3], [3], [3], [3]]),
+        'arr4': np.array([[4], [4], [4], [4], [4]]),
+        'arr5': np.array([[5], [5], [5], [5], [5]]),
+        'arr6': np.array([[6], [6], [6], [6], [6]]),
+        'arr7': np.array([[7], [7], [7], [7], [7]]),
+        'arr8': np.array([[8], [8], [8], [8], [8]])
+    }
+    
+    dict = load_images('/Users/usmantahir/Github Clones/Machine-Vision-Libs/testSet/8')
+    images = combine_matrix(dict)
+    print()
+    print(images)
+    
+    
+if __name__ == "__main__":
+    main()  
+'''

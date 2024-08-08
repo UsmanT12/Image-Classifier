@@ -2,38 +2,63 @@ import numpy as np
 from imageutils import * 
 from matrix import *
 from cosine_similarity import *
+from genutils import parse_command_line
+        
+def precompute_classes_MNIST(training_set_path, testing_set_path):
+    print("precompute_classes_MNIST")
+    trained_arr = [
+        DigitMatrix(f"{training_set_path}/0", '0'),
+        DigitMatrix(f"{training_set_path}/1", '1'),
+        DigitMatrix(f"{training_set_path}/2", '2'),
+        DigitMatrix(f"{training_set_path}/3", '3'),
+        DigitMatrix(f"{training_set_path}/4", '4'),
+        DigitMatrix(f"{training_set_path}/5", '5'),
+        DigitMatrix(f"{training_set_path}/6", '6'),
+        DigitMatrix(f"{training_set_path}/7", '7'),
+        DigitMatrix(f"{training_set_path}/8", '8'),
+        DigitMatrix(f"{training_set_path}/9", '9')
+    ]
+    test_arr = [
+        DigitMatrix(f"{testing_set_path}/0", '0'),
+        DigitMatrix(f"{testing_set_path}/1", '1'),
+        DigitMatrix(f"{testing_set_path}/2", '2'),
+        DigitMatrix(f"{testing_set_path}/3", '3'),
+        DigitMatrix(f"{testing_set_path}/4", '4'),
+        DigitMatrix(f"{testing_set_path}/5", '5'),
+        DigitMatrix(f"{testing_set_path}/6", '6'),
+        DigitMatrix(f"{testing_set_path}/7", '7'),
+        DigitMatrix(f"{testing_set_path}/8", '8'),
+        DigitMatrix(f"{testing_set_path}/9", '9')
+    ]
+    print("precompute_classes_MNIST done")
+    return trained_arr, test_arr
 
-def main():
-    one = DigitMatrix("trainingSet/1", '1')
-    two = DigitMatrix("trainingSet/2", '2')
-    three = DigitMatrix("trainingSet/3", '3')
-    four = DigitMatrix("trainingSet/4", '4')
-    five = DigitMatrix("trainingSet/5", '5')
-    six = DigitMatrix("trainingSet/6", '6')
-    seven = DigitMatrix("trainingSet/7", '7')
-    eight = DigitMatrix("trainingSet/8", '8')
-    nine = DigitMatrix("trainingSet/9", '9')
-    zero = DigitMatrix("trainingSet/0", '0')
-    trained_arr = [zero, one, two, three, four, five, six, seven, eight, nine]
-    
-    test_zero = DigitMatrix("testSet/0", '0')
-    test_one = DigitMatrix("testSet/1", '1')
-    test_two = DigitMatrix("testSet/2", '2')
-    test_three = DigitMatrix("testSet/3", '3')
-    test_four = DigitMatrix("testSet/4", '4')
-    test_five = DigitMatrix("testSet/5", '5')
-    test_six = DigitMatrix("testSet/6", '6')
-    test_seven = DigitMatrix("testSet/7", '7')
-    test_eight = DigitMatrix("testSet/8", '8')
-    test_nine = DigitMatrix("testSet/9", '9')
-    test_arr = [test_zero, test_one, test_two, test_three, test_four, test_five, test_six, test_seven, test_eight, test_nine]
-    
+def precompute_classes(training_set_path, testing_set_path):
+    trained_arr = []
+    test_arr = []
+
+    # Populate trained_arr
+    train_dirs = sorted([d for d in os.listdir(training_set_path) if os.path.isdir(os.path.join(training_set_path, d))])
+    for dir_name in train_dirs:
+        digit = dir_name.split('/')[-1]
+        trained_arr.append(DigitMatrix(f"{training_set_path}/{digit}", digit))
+
+    # Populate test_arr
+    test_dirs = sorted([d for d in os.listdir(testing_set_path) if os.path.isdir(os.path.join(testing_set_path, d))])
+    for dir_name in test_dirs:
+        digit = dir_name.split('/')[-1]
+        test_arr.append(DigitMatrix(f"{testing_set_path}/{digit}", digit))
+
+    return trained_arr, test_arr
+
+def test_class(trained_arr, test_arr):
     correct_predictions = 0
     total_predictions = 0
-    class_accuracy = {str(i): {'correct': 0, 'total': 0} for i in range(10)}
+    unique_classes = set([matrix.digit for matrix in trained_arr])
+    class_accuracy = {str(i): {'correct': 0, 'total': 0} for i in unique_classes}
     
     for test_matrix in test_arr:
-        for image_vector in test_matrix.img_dict.values():  # Assuming each DigitMatrix has a 'dict' attribute with image vectors
+        for image_vector in test_matrix.img_dict.values():
             predicted = predict_class(trained_arr, image_vector)
             actual = test_matrix.digit
             print(f"Predicted class: {predicted}, Actual class: {actual}")
@@ -47,12 +72,40 @@ def main():
     print(f"Correct predictions: {correct_predictions}")
     print(f"Wrong predictions: {total_predictions - correct_predictions}")
     print(f"Total predictions: {total_predictions}")
-    print(f"Accuracy: {accuracy * 100:.2f}%")
-
+    print(f"Overall Accuracy: {accuracy * 100:.2f}%")
+    
     for digit, stats in class_accuracy.items():
         class_acc = (stats['correct'] / stats['total']) * 100 if stats['total'] > 0 else 0
         print(f"Accuracy for class {digit}: {class_acc:.2f}%")
+ 
+def precompute_classes_dogs_cats(training_set_path, testing_set_path):
+     trained_arr = [
+        DigitMatrix(f"{training_set_path}/cats", 'cats'),
+        DigitMatrix(f"{training_set_path}/dogs", 'dogs'),
+     ]
+     
+     test_arr = [
+        DigitMatrix(f"{testing_set_path}/cats", 'cats'),
+        DigitMatrix(f"{testing_set_path}/dogs", 'dogs'),
+     ]
+     
+     return trained_arr, test_arr
+            
+
+def main(training_set_path, testing_set_path):
+    #required_params = ['trainingSet', 'testingSet']
+    #optional_params = ['imgSize']
+    params_dict = parse_command_line(required_params, optional_params)
+    
+    trained_arr, test_arr = precompute_classes(training_set_path, testing_set_path)
+    test_class(trained_arr, test_arr)
 
 
 if __name__ == "__main__":
-    main()
+    #training_set_path = "dog_cat_trainingSet"
+    #testing_set_path = "dog_cat_testSet"
+    #training_set_path = "trainingSet"
+    #testing_set_path = "testSet"
+    training_set_path = input("Enter the path to the training set: ")
+    testing_set_path = input("Enter the path to the testing set: ")
+    main(training_set_path, testing_set_path)  
