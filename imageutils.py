@@ -82,29 +82,3 @@ def create_sub_simple(matrix):
         average = np.mean(row)
         averages.append(average)
     return averages
-
-
-
-'''
-def main():
-    np.set_printoptions(threshold=np.inf)
-    dict = {
-        'arr1': np.array([[1], [1], [1], [1], [1]]),
-        'arr2': np.array([[2], [2], [2], [2], [2]]),
-        'arr3': np.array([[3], [3], [3], [3], [3]]),
-        'arr4': np.array([[4], [4], [4], [4], [4]]),
-        'arr5': np.array([[5], [5], [5], [5], [5]]),
-        'arr6': np.array([[6], [6], [6], [6], [6]]),
-        'arr7': np.array([[7], [7], [7], [7], [7]]),
-        'arr8': np.array([[8], [8], [8], [8], [8]])
-    }
-    
-    dict = load_images('/Users/usmantahir/Github Clones/Machine-Vision-Libs/testSet/8')
-    images = combine_matrix(dict)
-    print()
-    print(images)
-    
-    
-if __name__ == "__main__":
-    main()  
-'''

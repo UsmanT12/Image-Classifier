@@ -71,20 +71,6 @@ class DigitMatrix:
         self.VT = VT[indices]
         self.embedding = self.U
 
-    '''
-    def setRowAverage(self):
-        self.row_avg = np.mean(self.cos_similarity, axis=1)
-        self.row_avg = np.round(self.row_avg, 2)
-   
-    def setRepImg(self):
-        index = np.argmax(self.row_avg)
-        # self.img_dict[index]
-        print(f"Representative image index for digit {self.digit}: {index}")
-        
-    def show_matrix(self):
-       generate_html_table(list(self.img_dict.keys), self.cos_similarity)
-    '''
-
 #tests cos similarity of a test image across each subspace and chooses the subspace it projects in the most
 def predict_class(classes, test_image):
     highest = 0
