@@ -30,8 +30,6 @@ def load_images(directory, size1, size2):
     for i in os.listdir(directory):
         if i.lower().endswith('.jpeg') or i.endswith('.jpg'):
             image_path = os.path.join(directory, i)
-            #image = Image.open(image_path).convert('L')
-            #dict[i] = column_vector(np.array(image))
             resized_image = resize_image(image_path, size1, size2)
             dict[i] = column_vector(resized_image)
     return dict

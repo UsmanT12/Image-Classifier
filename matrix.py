@@ -16,7 +16,7 @@ class DigitMatrices:
         
 
 class DigitMatrix:
-    size = (200, 200)
+    size = ()
     digit = None
     path = ""
     img_dict = {}
@@ -25,20 +25,23 @@ class DigitMatrix:
     U = np.zeros(shape=(1,))
     S = np.zeros(shape=(1,))
     VT = np.zeros(shape=(1,))
+    thresh_perc = 0
 
-    def __init__(self, path, digit):
+    def __init__(self, path, digit, size, threshold):
         self.path = path
         self.digit = digit
-        self.img_dict = load_images(path, 28, 28)
+        self.size = size
+        self.thresh_perc = threshold
+        self.img_dict = load_images(path, size[0], size[1])
         self.matrix = combine_matrix(self.img_dict)
         self.principal_components()
         self.embedding = self.set_subspace()
         print(f"Class: {self.digit} has been initialized")
 
     def set_subspace(self):
-        if len(self.embedding.shape) != 2:
-            self.embedding = self.embedding.reshape(self.embedding.shape[0], -1)
-        return create_sub(self.embedding)
+        if len(self.U.shape) != 2:
+            self.U = self.U.reshape(self.U.shape[0], -1)
+        return create_sub(self.U)
     
     def setMatrix(self):
         self.matrix = combine_matrix(self.img_dict)
@@ -64,7 +67,7 @@ class DigitMatrix:
         VT = matrix_svd.Vh
         
         #Get only principal compopents of U
-        threshold = .01 * np.max(S)
+        threshold = self.thresh_perc * np.max(S)
         indices = np.where(S > threshold)
         self.U = U[:, indices]
         self.S = S[indices]

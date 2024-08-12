@@ -5,8 +5,11 @@ import sys
 def parse_command_line(required_params, optional_params):
     params_dict = {}
     args = sys.argv[1:]
-    default_values = {'img_size': (28, 28),
-                      'num_classes': ['0', '4']}
+    default_values = {
+        'img_size': (28, 28),
+        'num_classes': 2,
+        'threshold': 0.015
+        }
     
     # Create a usage line for checking if the number of arguments is correct
     usage_message = f"Usage: {sys.argv[0]} " + " ".join(required_params)
@@ -18,48 +21,38 @@ def parse_command_line(required_params, optional_params):
         raise ValueError(f"Not all required parameters are provided.\n{usage_message}")
     
     # Assign values to required parameters
-    for param in args:
-        param = param.split('=')
-        if not param[1] and param[0] in optional_params:
-            break
-        if not param[1] and param[0] in required_params:
-            print(f"Error: Enter the value for {param[0]}.")
+    for arg in args:
+        param = arg.split('=')
+        if len(param) != 2:
+            print(f"Error: Invalid argument format: {arg}. Expected format is param=value.")
             return {}
-        if param[0] == 'imgSize':
-            param[1] = tuple(int(x.strip())for x in param[1].split(','))
-            print(f"param 1 = {param[1]}")
-        if param[0] == 'num_classes':
-            num_classes = int(param[1])
-            if num_classes < 2 or num_classes > 10:
+        key, value = param[0], param[1]
+        if key in optional_params and not value:
+            continue
+        if key in required_params and not value:
+            print(f"Error: Enter the value for {key}.")
+            return {}
+        if key == 'img_size':
+            value = tuple(int(x.strip()) for x in value.strip('()').split(','))
+        if key == 'num_classes':
+            value = int(value)
+            if value < 2 or value > 10:
                 print(f"Error: Enter a valid number for num_classes")
                 continue
-        if param[0] == 'classes':
-           param[1]=[x.strip() for x in param[1].split(',')]
-           print(f"classes{param[1]}")
-        params_dict[param[0]] = param[1]
+        if key == 'threshold':
+            value = float(value)
+            if value < 0 or value > 1.0:
+                print(f"Error: Enter a valid threshold value between 0 and 1.0")
+                continue
+        params_dict[key] = value
     
     for param in required_params:
         if param not in params_dict:
             print(f"Error: Missing required parameter: {param}.")
             return {}
+    
     for param, default_value in default_values.items():
         if param not in params_dict:
             params_dict[param] = default_value
-            print(f"assigned default value for {param}")
-            
-    return params_dict
-
-'''
-def main():
-    required_params = ['class_path_1', 'class_path_2']
-    optional_params = ['imgSize']
     
-    try:
-        result = parse_command_line(required_params, optional_params)
-        print("Test case result:", result)
-    except Exception as e:
-        print("Test case failed:", e)
-
-if __name__ == "__main__":
-     main()
-'''
+    return params_dict
