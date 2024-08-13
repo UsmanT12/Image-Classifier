@@ -11,20 +11,16 @@ def parse_command_line(required_params, optional_params):
         'threshold': 0.015
         }
     
-    # Create a usage line for checking if the number of arguments is correct
-    usage_message = f"Usage: {sys.argv[0]} " + " ".join(required_params)
-    if optional_params:
-        usage_message += " [" + " ".join(f"--{param} <value>" for param in optional_params) + "]"
-    
     # Check if the number of arguments is correct
     if len(args) < len(required_params):
-        raise ValueError(f"Not all required parameters are provided.\n{usage_message}")
+        print(f"Error: Missing required arguments.")
+        return {}
     
     # Assign values to required parameters
     for arg in args:
         param = arg.split('=')
         if len(param) != 2:
-            print(f"Error: Invalid argument format: {arg}. Expected format is param=value.")
+            print(f"Error: Invalid argument format")
             return {}
         key, value = param[0], param[1]
         if key in optional_params and not value:
@@ -37,13 +33,15 @@ def parse_command_line(required_params, optional_params):
         if key == 'num_classes':
             value = int(value)
             if value < 2 or value > 10:
-                print(f"Error: Enter a valid number for num_classes")
-                continue
+                print(f"Error: Entered an invalid number of classes")
+                print(f"Expected: a number between 2 and 10")
+                return {}
         if key == 'threshold':
             value = float(value)
             if value < 0 or value > 1.0:
-                print(f"Error: Enter a valid threshold value between 0 and 1.0")
-                continue
+                print(f"Error: Entered an invalid threshold value")
+                print(f"Expected: value between 0 and 1.0")
+                return {}
         params_dict[key] = value
     
     for param in required_params:

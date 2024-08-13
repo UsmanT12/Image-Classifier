@@ -61,22 +61,8 @@ def create_sub(A):
     embedding_matrix = np.dot(A_AT_A_inv, A_transpose)
     
     return embedding_matrix
-    
+
+#Projects image onto a subspace    
 def project_image(image, embedding):
     projection = np.dot(embedding, image)
     return projection
-
-#Function for showing an image in a graph
-def show_image(img_arr):
-    plt.imshow(img_arr, cmap='gray') 
-    plt.show() 
-    return None
-
-
-#really simple subspace function for an image matrix
-def create_sub_simple(matrix):
-    averages = []
-    for row in matrix:
-        average = np.mean(row)
-        averages.append(average)
-    return averages
