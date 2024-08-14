@@ -5,11 +5,6 @@ import sys
 def parse_command_line(required_params, optional_params):
     params_dict = {}
     args = sys.argv[1:]
-    default_values = {
-        'img_size': (28, 28),
-        'num_classes': 2,
-        'threshold': 0.015
-        }
     
     # Check if the number of arguments is correct
     if len(args) < len(required_params):
@@ -25,32 +20,15 @@ def parse_command_line(required_params, optional_params):
         key, value = param[0], param[1]
         if key in optional_params and not value:
             continue
-        if key in required_params and not value:
-            print(f"Error: Enter the value for {key}.")
+        elif key in required_params and not value:
+            print(f"Error: Enter the value for {key}. first")
             return {}
-        if key == 'img_size':
-            value = tuple(int(x.strip()) for x in value.strip('()').split(','))
-        if key == 'num_classes':
-            value = int(value)
-            if value < 2 or value > 10:
-                print(f"Error: Entered an invalid number of classes")
-                print(f"Expected: a number between 2 and 10")
-                return {}
-        if key == 'threshold':
-            value = float(value)
-            if value < 0 or value > 1.0:
-                print(f"Error: Entered an invalid threshold value")
-                print(f"Expected: value between 0 and 1.0")
-                return {}
         params_dict[key] = value
     
+    #Check if all required parameters are present
     for param in required_params:
         if param not in params_dict:
             print(f"Error: Missing required parameter: {param}.")
             return {}
-    
-    for param, default_value in default_values.items():
-        if param not in params_dict:
-            params_dict[param] = default_value
-    
+
     return params_dict
