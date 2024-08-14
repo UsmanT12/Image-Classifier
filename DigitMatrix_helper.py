@@ -33,7 +33,7 @@ def cosine_similarity(vec1, vec2):
 def create_sub(A):
     A_transpose = np.transpose(A)
     AT_A = np.dot(A_transpose, A)
-    AT_A_inv = np.linalg.pinv(AT_A)
+    AT_A_inv = np.linalg.inv(AT_A)
     A_AT_A_inv = np.dot(A, AT_A_inv)
     embedding_matrix = np.dot(A_AT_A_inv, A_transpose)
     
