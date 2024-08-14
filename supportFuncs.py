@@ -42,6 +42,8 @@ def test_class(trained_arr, test_arr):
     unique_classes = set([matrix.digit for matrix in trained_arr])
     class_accuracy = {str(i): {'correct': 0, 'total': 0} for i in unique_classes}
     
+    digit_to_matrix = {str(matrix.digit): matrix for matrix in trained_arr}
+    
     for test_matrix in test_arr:
         for image_vector in test_matrix.img_dict.values():
             predicted = predict_class(trained_arr, image_vector)
@@ -62,4 +64,5 @@ def test_class(trained_arr, test_arr):
     for digit in sorted(class_accuracy.keys()):
         stats = class_accuracy[digit]
         class_acc = (stats['correct'] / stats['total']) * 100 if stats['total'] > 0 else 0
-        print(f"Accuracy for class {digit}: {class_acc:.2f}% ({stats['correct']}/{stats['total']})")
+        trained_images_count = digit_to_matrix[digit].trained_images
+        print(f"Accuracy for class {digit}: {class_acc:.2f}% ({stats['correct']}/{stats['total']}), trained images: {trained_images_count}")

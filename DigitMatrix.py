@@ -13,6 +13,7 @@ class DigitMatrix:
     S = np.zeros(shape=(1,))
     VT = np.zeros(shape=(1,))
     thresh_perc = 0
+    trained_images = 0
 
     def __init__(self, path, digit, size, threshold):
         self.path = path
@@ -23,6 +24,7 @@ class DigitMatrix:
         self.matrix = combine_matrix(self.img_dict)
         self.principal_components()
         self.embedding = self.set_subspace()
+        self.trained_images = len(self.img_dict)
         print(f"Class: {self.digit} has been initialized")
 
     def set_subspace(self):
