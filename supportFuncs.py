@@ -48,10 +48,11 @@ def test_class(trained_arr, test_arr):
         for image_vector in test_matrix.img_dict.values():
             predicted = predict_class(trained_arr, image_vector)
             actual = test_matrix.digit
-            print(f"Predicted class: {predicted}, Actual class: {actual}")
             if predicted == actual:
                 correct_predictions += 1
                 class_accuracy[actual]['correct'] += 1
+            else:
+                print(f"Predicted class: {predicted}, Actual class: {actual}")
             class_accuracy[actual]['total'] += 1
             total_predictions += 1
 
