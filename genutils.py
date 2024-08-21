@@ -9,26 +9,29 @@ def parse_command_line(required_params, optional_params):
     # Check if the number of arguments is correct
     if len(args) < len(required_params):
         print(f"Error: Missing required arguments.")
-        return {}
+        return None
     
     # Assign values to required parameters
     for arg in args:
         param = arg.split('=')
         if len(param) != 2:
             print(f"Error: Invalid argument format")
-            return {}
+            return None
         key, value = param[0], param[1]
-        if key in optional_params and not value:
+        if key not in optional_params and key not in required_params:
+            print(f"Error: Invalid parameter: {key}")
+            return None
+        elif key in optional_params and not value:
             continue
         elif key in required_params and not value:
             print(f"Error: Enter the value for {key}. first")
-            return {}
+            return None
         params_dict[key] = value
     
     #Check if all required parameters are present
     for param in required_params:
         if param not in params_dict:
             print(f"Error: Missing required parameter: {param}.")
-            return {}
+            return None
 
     return params_dict

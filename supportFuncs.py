@@ -2,9 +2,9 @@
 import sys
 import os
 import numpy as np
-from imageutils import load_images, combine_matrix, create_sub
-from DigitMatrix import DigitMatrix
-from DigitMatrix_helper import predict_class
+from imageutils import load_images, combine_matrix
+from ImageClass import ImageClass
+from ImageClass_helper import predict_class, create_sub
 
 #Creates subspace of training and test sets
 def precompute_classes(training_set_path, testing_set_path, size, num_classes, threshold):
@@ -19,7 +19,7 @@ def precompute_classes(training_set_path, testing_set_path, size, num_classes, t
             num = 0
             break
         digit = dir_name.split('/')[-1]
-        trained_arr.append(DigitMatrix(f"{training_set_path}/{digit}", digit, size, threshold))
+        trained_arr.append(ImageClass(f"{training_set_path}/{digit}", digit, size, threshold))
         num += 1
     
     num = 0    
@@ -30,7 +30,7 @@ def precompute_classes(training_set_path, testing_set_path, size, num_classes, t
             num = 0
             break
         digit = dir_name.split('/')[-1]
-        test_arr.append(DigitMatrix(f"{testing_set_path}/{digit}", digit, size, threshold))
+        test_arr.append(ImageClass(f"{testing_set_path}/{digit}", digit, size, threshold))
         num += 1
 
     return trained_arr, test_arr
@@ -39,15 +39,15 @@ def precompute_classes(training_set_path, testing_set_path, size, num_classes, t
 def test_class(trained_arr, test_arr):
     correct_predictions = 0
     total_predictions = 0
-    unique_classes = set([matrix.digit for matrix in trained_arr])
+    unique_classes = set([matrix.name for matrix in trained_arr])
     class_accuracy = {str(i): {'correct': 0, 'total': 0} for i in unique_classes}
     
-    digit_to_matrix = {str(matrix.digit): matrix for matrix in trained_arr}
+    digit_to_matrix = {str(matrix.name): matrix for matrix in trained_arr}
     
     for test_matrix in test_arr:
         for image_vector in test_matrix.img_dict.values():
             predicted = predict_class(trained_arr, image_vector)
-            actual = test_matrix.digit
+            actual = test_matrix.name
             if predicted == actual:
                 correct_predictions += 1
                 class_accuracy[actual]['correct'] += 1

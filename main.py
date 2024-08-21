@@ -1,7 +1,7 @@
 import numpy as np
 from imageutils import * 
 from supportFuncs import *
-from DigitMatrix_helper import predict_class
+from ImageClass_helper import predict_class
 from genutils import parse_command_line
             
 def main():

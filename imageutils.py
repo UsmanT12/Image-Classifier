@@ -48,21 +48,3 @@ def combine_matrix(dict):
 def combine_vectors(vector1, vector2):
     matrix = np.hstack((vector1, vector2))
     return matrix
-
-#create subspace of a class with the column image matrix
-def create_sub(A):
-    if A.size == 0:
-        raise ValueError("Input matrix A is empty")
-
-    A_transpose = np.transpose(A)
-    AT_A = np.dot(A_transpose, A)
-    AT_A_inv = np.linalg.pinv(AT_A)
-    A_AT_A_inv = np.dot(A, AT_A_inv)
-    embedding_matrix = np.dot(A_AT_A_inv, A_transpose)
-    
-    return embedding_matrix
-
-#Projects image onto a subspace    
-def project_image(image, embedding):
-    projection = np.dot(embedding, image)
-    return projection
