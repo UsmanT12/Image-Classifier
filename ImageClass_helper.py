@@ -24,10 +24,10 @@ def predict_class(classes, test_image):
 #create subspace of a class with the column image matrix
 def create_sub(A):
     A_transpose = np.transpose(A)
-    AT_A = np.dot(A_transpose, A)
+    AT_A = np.matmul(A_transpose, A)
     AT_A_inv = np.linalg.inv(AT_A)
-    A_AT_A_inv = np.dot(A, AT_A_inv)
-    embedding_matrix = np.dot(A_AT_A_inv, A_transpose)
+    A_AT_A_inv = np.matmul(A, AT_A_inv)
+    embedding_matrix = np.matmul(A_AT_A_inv, A_transpose)
     
     return embedding_matrix
 
