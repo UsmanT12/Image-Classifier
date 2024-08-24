@@ -44,15 +44,16 @@ def test_class(trained_arr, test_arr):
     
     digit_to_matrix = {str(matrix.name): matrix for matrix in trained_arr}
     
+    print('\n' + "Incorrectly Classified Images:")
     for test_matrix in test_arr:
-        for image_vector in test_matrix.img_dict.values():
+        for image_name, image_vector in test_matrix.img_dict.items():
             predicted = predict_class(trained_arr, image_vector)
             actual = test_matrix.name
             if predicted == actual:
                 correct_predictions += 1
                 class_accuracy[actual]['correct'] += 1
             else:
-                print(f"Predicted class: {predicted}, Actual class: {actual}")
+                print(f"Predicted class: {predicted}, Actual class: {actual}, Image: {image_name}")
             class_accuracy[actual]['total'] += 1
             total_predictions += 1
 
