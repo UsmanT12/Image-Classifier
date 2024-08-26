@@ -1,7 +1,7 @@
 imageutils.py is a library that holds function for creating image vectors
 genutils.py is a library with one function that parses command-line params into a dict
-lib_tests.p0y tests the genutils.py and imageutils.py functions
-cosine_similarity.py is a function used for testing cosine similarities between image vectors
-PIL_Practice.py is a file that wazs used to get used to Pillow library
 
-TODO: Update
+To run the program:
+  Required: enter the the directory to the training and testing sets of classes that hold images for those classes.
+  Optional: enter image size, number of classes (2-10), and threshold percent
+  Expected Usage: python main.py training_set_path='<directory>' testing_set_path='<directory>' [img_size=<value> num_classes=<value> threshold=<value>]
