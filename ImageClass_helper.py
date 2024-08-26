@@ -22,7 +22,7 @@ def predict_class(classes, test_image):
     return predicted_class
 
 #create subspace of a class with the column image matrix
-def create_sub(A):
+def create_subspace(A):
     A_transpose = np.transpose(A)
     AT_A = np.matmul(A_transpose, A)
     AT_A_inv = np.linalg.inv(AT_A)

@@ -1,7 +1,6 @@
 import numpy as np
 from imageutils import load_images, combine_matrix
-from ImageClass_helper import create_sub
-#from supportFuncs import cosine_similarity, project_image
+from ImageClass_helper import create_subspace
 
 class ImageClass:
     size = ()
@@ -31,7 +30,7 @@ class ImageClass:
     def set_subspace(self):
         if len(self.U.shape) != 2:
             self.U = self.U.reshape(self.U.shape[0], -1)
-        return create_sub(self.U)
+        return create_subspace(self.U)
     
     def setMatrix(self):
         self.matrix = combine_matrix(self.img_dict)
