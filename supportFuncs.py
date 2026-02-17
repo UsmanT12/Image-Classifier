@@ -4,7 +4,7 @@ import os
 import numpy as np
 from imageutils import load_images, combine_matrix
 from ImageClass import ImageClass
-from ImageClass_helper import predict_class, create_sub
+from ImageClass_helper import predict_class
 
 #Creates subspace of training and test sets
 def precompute_classes(training_set_path, testing_set_path, size, num_classes, threshold):

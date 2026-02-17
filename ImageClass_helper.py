@@ -1,5 +1,4 @@
 import numpy as np
-from supportFuncs import *
 
 #Projects image onto a subspace    
 def project_image(image, embedding):
