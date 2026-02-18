@@ -5,6 +5,12 @@ ImageClass.py holds the class data for images
 ImageClass_helper.py holds the helper functions for the ImageClass class
 main.py has the main functions that is run from parsing a commandline script
 
+## Tech Stack
+
+- **Backend**: Python, FastAPI, Uvicorn
+- **Frontend**: Next.js, React, TypeScript, Tailwind CSS
+- **ML**: NumPy, Pillow
+
 To run the program:
 Required: enter the the directory to the training and testing sets of classes that hold images for those classes.
 Optional: enter image size, number of classes (2-10), and threshold percent
